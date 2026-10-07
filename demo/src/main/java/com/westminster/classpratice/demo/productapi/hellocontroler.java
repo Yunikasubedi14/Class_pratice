@@ -10,4 +10,10 @@ public class hellocontroler {
     public String hello() {
         return "Hello from java.";
     }
+
+    @GetMapping("/api/address")
+    public String address() {
+        Address address = new Address(109, "Home", "Bagmati", "Kathmandu", "Nepal");
+        return address.getFullAddress();
+    }
 }
