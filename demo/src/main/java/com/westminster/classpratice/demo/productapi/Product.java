@@ -1,23 +1,33 @@
+
 package com.westminster.classpratice.demo.productapi;
 
-public class Product {
+import com.fasterxml.jackson.annotation.JsonCreator;
 
+public class Product {
     private int id;
     private String name;
     private int qty;
     private boolean inStock;
-    private double price;
+    private double unitPrice;
 
-    public Product(int id, String name, int qty, boolean inStock, double price) {
+    private static int instanceCount = 0;
+
+    @JsonCreator
+    public Product() {
+        this(0, null, 0, false, 0.0);
+    }
+
+    public Product(int id, String name, int qty, boolean inStock, double unitPrice) {
+        instanceCount++;
         this.id = id;
         this.name = name;
         this.qty = qty;
         this.inStock = inStock;
-        this.price = price;
+        this.unitPrice = unitPrice;
     }
 
     public double calculateTotal() {
-        return price * qty;
+        return this.qty * this.unitPrice;
     }
 
     public int getId() {
@@ -32,11 +42,35 @@ public class Product {
         return this.qty;
     }
 
-    public boolean isInStock() {
+    public boolean getInStock() {
         return this.inStock;
     }
 
-    public double getPrice() {
-        return this.price;
+    public double getUnitPrice() {
+        return this.unitPrice;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public static int getInstanceCount() {
+        return instanceCount;
     }
 }
