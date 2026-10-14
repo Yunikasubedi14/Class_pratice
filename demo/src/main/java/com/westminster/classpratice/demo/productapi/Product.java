@@ -14,6 +14,7 @@ public class Product {
 
     @JsonCreator
     public Product() {
+
         this(0, null, 0, false, 0.0);
     }
 
@@ -27,14 +28,17 @@ public class Product {
     }
 
     public double calculateTotal() {
+
         return this.qty * this.unitPrice;
     }
 
     public int getId() {
+
         return this.id;
     }
 
     public String getName() {
+
         return this.name;
     }
 
