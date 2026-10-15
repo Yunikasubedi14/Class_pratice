@@ -3,17 +3,15 @@ package com.westminster.classpratice.demo.productapi;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
-public class Product_Controller {
+public class ProductController {
 
     private final ProductService productService;
 
-    public Product_Controller(ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
