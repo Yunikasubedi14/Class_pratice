@@ -1,4 +1,3 @@
-
 package com.westminster.classpratice.demo.productapi;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
