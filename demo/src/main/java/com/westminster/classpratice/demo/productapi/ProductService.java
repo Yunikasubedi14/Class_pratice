@@ -1,5 +1,5 @@
-
 package com.westminster.classpratice.demo.productapi;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,19 +21,44 @@ public class ProductService {
 
     public List<Product> findByName(String name) {
         return products.stream()
-                .filter(p -> p.getName()
-                        .contains(name))
-                .toList();
+                .filter(p -> p.getName().contains(name)).toList();
     }
 
     public Product addProduct(Product product) {
+        DigitalProduct dp = new DigitalProduct(112,
+                "Digital Product",
+                2,
+                true,
+                34.99,
+                "http://xsdfa.com/file/3434",
+                23.33);
+
+
         product.setId(nextId++);
         products.add(product);
         return product;
     }
 
+    public List<Product> addGetInheritedProduct() {
+        DigitalProduct dp = new DigitalProduct(112,
+                "Digital Product",
+                2,
+                true,
+                34.99,
+                "http://xsdfa.com/file/3434",
+                23.33);
+        PhysicalProduct physicalProduct = new PhysicalProduct(122,
+                "Physical Product",
+                3,
+                true,
+                11.99,
+                3.09,
+                "20x10");
+        products.add(dp);
+        products.add(physicalProduct);
+        return this.products;
+    }
     public void deleteProduct(int id) {
         products.removeIf(p -> p.getId() == id);
     }
 }
-

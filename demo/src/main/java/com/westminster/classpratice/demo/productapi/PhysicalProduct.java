@@ -9,10 +9,10 @@ public class PhysicalProduct extends Product {
     }
 
     public PhysicalProduct(int id, String name, int qty,
-                           boolean inStock, double price,
+                           boolean inStock, double unitPrice,
                            double weightKg, String dimensions) {
 
-        super(id, name, qty, inStock, price);
+        super(id, name, qty, inStock, unitPrice);
 
         this.weightKg = weightKg;
         this.dimensions = dimensions;

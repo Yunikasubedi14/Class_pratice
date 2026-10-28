@@ -1,0 +1,16 @@
+@startuml
+class Product {
+    -{static} instanceCount: int
+    -id: int
+    -name: String
+    -qty: int
+    -unitPrice: double
+    +getId(): int
+    +getName(): String
+    +getQty(): int
+    +getUnitPrice(): double
+    +calculateTotal(): double
+    +{static}getInstanceCount(): int
+}
+
+@enduml
