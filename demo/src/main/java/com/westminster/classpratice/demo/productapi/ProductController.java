@@ -57,4 +57,15 @@ public class ProductController {
     public List<Product> inherited() {
         return productService.addGetInheritedProduct();
     }
+
+    @GetMapping("/override")
+    public List<String>override() {
+        productService.addGetInheritedProduct();
+        List<String> overridelist = new ArrayList<>();
+        productService.getAllProducts().forEach(product -> {
+            overridelist.add(product.getSummary());
+        });
+
+        return overridelist;
+    }
 }
