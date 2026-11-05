@@ -58,7 +58,20 @@ public class ProductService {
         products.add(physicalProduct);
         return this.products;
     }
+
     public void deleteProduct(int id) {
         products.removeIf(p -> p.getId() == id);
+    }
+
+    public void applyDiscounts(List<Product> products) {
+        products.forEach(product -> {
+            if (product instanceof Discountable) {
+                ((Discountable) product).applyDiscount(0.10);
+            }
+        });
+    }
+
+    public List<Product> getDiscountedProducts() {
+        return products;
     }
 }
