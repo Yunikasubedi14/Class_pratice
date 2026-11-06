@@ -1,10 +1,10 @@
+
 package com.westminster.classpratice.demo.productapi;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -16,7 +16,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-
     @GetMapping("/")
     public List<Product> all() {
         return productService.getAllProducts();
@@ -25,7 +24,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getById(@PathVariable int id) {
         return productService.getProductById(id)
-                .orElse(null); // Lecture 6
+                .orElse(null);
     }
 
     @PostMapping("/")
@@ -38,20 +37,42 @@ public class ProductController {
         return productService.addGetInheritedProduct();
     }
 
+    // Display product summaries using method overriding
     @GetMapping("/override")
     public List<String> override() {
+
         productService.addGetInheritedProduct();
+
         List<String> overrideList = new ArrayList<>();
+
         productService.getAllProducts().forEach(product -> {
             overrideList.add(product.getSummary());
         });
+
         return overrideList;
     }
 
+    // Apply discounts and return products
     @GetMapping("/getDiscountedProducts")
     public List<Product> applyDiscount() {
-        List<Product> products = productService.addGetInheritedProduct();
+
+        List<Product> products =
+                productService.addGetInheritedProduct();
+
         productService.applyDiscounts(products);
+
         return productService.getDiscountedProducts();
+    }
+
+    // Create a sample ServiceProduct
+    @PostMapping("/services")
+    public ServiceProduct addServiceProduct() {
+        return productService.addServiceProduct();
+    }
+
+    // Get all ServiceProducts
+    @GetMapping("/services")
+    public List<ServiceProduct> getServiceProducts() {
+        return productService.getServiceProducts();
     }
 }
