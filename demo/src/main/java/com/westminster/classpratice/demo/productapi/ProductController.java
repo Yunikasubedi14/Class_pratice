@@ -1,10 +1,14 @@
 
 package com.westminster.classpratice.demo.productapi;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -16,63 +20,59 @@ public class ProductController {
         this.productService = productService;
     }
 
+
     @GetMapping("/")
     public List<Product> all() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Product getById(@PathVariable int id) {
-        return productService.getProductById(id)
-                .orElse(null);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Product> getById(@PathVariable int id) {
+        /***
+         try {
+         Product product = productService.getProductById(id);
+         return ResponseEntity.ok(product);
+         }catch (Exception ex){
+         return ResponseEntity
+         .status(HttpStatus.NOT_FOUND)
+         .body(new ErrorResponse(
+         ex.getMessage(), HttpStatus.NOT_FOUND.value()
+         ));
+         }
+         ***/
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
     }
 
     @PostMapping("/")
-    public Product add(@RequestBody Product product) {
-        return productService.addProduct(product);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Product add(@RequestBody CreateProductRequest productRequest) {
+        return productService.addProduct(productRequest);
     }
 
     @GetMapping("/inherited")
+    @ResponseStatus(HttpStatus.OK)
     public List<Product> inherited() {
         return productService.addGetInheritedProduct();
     }
 
-    // Display product summaries using method overriding
     @GetMapping("/override")
+    @ResponseStatus(HttpStatus.OK)
     public List<String> override() {
-
         productService.addGetInheritedProduct();
-
         List<String> overrideList = new ArrayList<>();
-
         productService.getAllProducts().forEach(product -> {
             overrideList.add(product.getSummary());
         });
-
         return overrideList;
     }
 
-    // Apply discounts and return products
     @GetMapping("/getDiscountedProducts")
+    @ResponseStatus(HttpStatus.OK)
     public List<Product> applyDiscount() {
-
-        List<Product> products =
-                productService.addGetInheritedProduct();
-
+        List<Product> products = productService.addGetInheritedProduct();
         productService.applyDiscounts(products);
-
         return productService.getDiscountedProducts();
-    }
-
-    // Create a sample ServiceProduct
-    @PostMapping("/services")
-    public ServiceProduct addServiceProduct() {
-        return productService.addServiceProduct();
-    }
-
-    // Get all ServiceProducts
-    @GetMapping("/services")
-    public List<ServiceProduct> getServiceProducts() {
-        return productService.getServiceProducts();
     }
 }

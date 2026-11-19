@@ -5,17 +5,21 @@ public class DigitalProduct extends Product implements Discountable {
     private double fileSizeMB;
     private double discountedPrice;
 
-    public DigitalProduct() {
-    }
-
-    public DigitalProduct(int id, String name, int qty,
-                          boolean inStock, double unitPrice,
-                          String downloadUrl, double fileSizeMB) {
-
+    public DigitalProduct(int id, String name, int qty, boolean inStock, double unitPrice, String downloadUrl, double fileSizeMB) {
         super(id, name, qty, inStock, unitPrice);
-
         this.downloadUrl = downloadUrl;
         this.fileSizeMB = fileSizeMB;
+    }
+    public static DigitalProduct from(int id, CreateProductRequest productRequest) {
+        return new DigitalProduct(
+                id,
+                productRequest.name(),
+                productRequest.qty(),
+                productRequest.inStock(),
+                productRequest.unitPrice(),
+                "http://xsdfa.com/file/3434",
+                23.33
+        );
     }
 
     public String getDownloadUrl() {
@@ -25,6 +29,7 @@ public class DigitalProduct extends Product implements Discountable {
     public double getFileSizeMB() {
         return this.fileSizeMB;
     }
+
     @Override
     public String getSummary() {
         return "Digital: " + getName()
@@ -41,5 +46,3 @@ public class DigitalProduct extends Product implements Discountable {
         return discountedPrice;
     }
 }
-
-
